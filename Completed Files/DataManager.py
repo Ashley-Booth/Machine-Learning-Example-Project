@@ -60,6 +60,17 @@ class DataManager:
         for column in columns:
             Type = type(self.data[column][0])
             print(f"{column}:   {Type}")
+    
+    #Model helper Functions:
+    def train_test_split(self):
+        '''
+        Split the data into training and test datasets
+        '''
+    def train_valid_train_split(self):
+        '''
+        Split the data into training, validation, and test datasets
+        '''
+    
         
 
 if __name__=="__main__":
