@@ -3,8 +3,10 @@ from matplotlib import pyplot as plt
 
 class DataManager:
     def __init__(self,path,filter=True):
+        '''
+        This class will be how we interact and manage our dataset. 
+        '''
         self.data = pd.read_csv(path)
-        
         if filter:
             columns_keep = ["id", "diagnosis", "radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean"]
             for column in self.data.columns.values:
@@ -50,7 +52,7 @@ if __name__=="__main__":
     The following will only run if this is the file being run (it will not run if this file is imported into another)
     
     '''
-    Dm = DataManager("Data/data.csv")
+    Dm = DataManager("./Data/data.csv")
     #Dm.summary()
     #Dm.get_columns()
 
