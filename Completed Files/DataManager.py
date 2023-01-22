@@ -5,14 +5,19 @@ class DataManager:
     def __init__(self,path,filter=True):
         '''
         This class will be how we interact and manage our dataset. 
+
+        The initialization function includes a filter option as there is a lot of data in the dataset, some of which is more confusing than helpful. The built in filter function filters the dataset down 7 main columns. 
         '''
         self.data = pd.read_csv(path)
         if filter:
-            columns_keep = ["id", "diagnosis", "radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean"]
-            for column in self.data.columns.values:
-                if column not in columns_keep:
-                    self.data = self.data.drop(column,axis="columns")
-            print(self.data.head())
+            self.filter()
+        
+    def filter(self):
+        columns_keep = ["id", "diagnosis", "radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean"]
+        for column in self.data.columns.values:
+            if column not in columns_keep:
+                self.data = self.data.drop(column,axis="columns")
+        print(self.data.head())
     
     def print_data(self):
         '''
