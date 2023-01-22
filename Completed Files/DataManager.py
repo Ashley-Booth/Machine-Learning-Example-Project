@@ -31,10 +31,20 @@ class DataManager:
         Displays the data as a given graph type. 
         Graph types include: bar, pie
         '''
+        malignant = 0
+        benign = 0
+        for diagnosis in self.data["diagnosis"]:
+            if diagnosis=="M": malignant+=1
+            if diagnosis=="B": benign+=1
         if type.lower()=="bar":
-            print("foo")
+            plt.bar("Maliganant",malignant,color="Red")
+            plt.bar("Benign",benign,color="Green")
+            plt.show()
         elif type.lower()=="pie":
-            print("bar")
+            figure, ax1 = plt.subplots()
+            ax1.pie([malignant,benign],labels=["malignant","benign"])
+            ax1.axis('equal')
+            plt.show()
         else:
             print("Please enter a valid type for visualize method")
     def summary(self):
@@ -58,6 +68,7 @@ if __name__=="__main__":
     
     '''
     Dm = DataManager("./Data/data.csv")
+    Dm.visualize(type="pie")
     #Dm.summary()
     #Dm.get_columns()
 
