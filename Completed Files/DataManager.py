@@ -62,10 +62,20 @@ class DataManager:
             print(f"{column}:   {Type}")
     
     #Model helper Functions:
-    def train_test_split(self):
+    def train_test_split(self,path="./Data"):
         '''
         Split the data into training and test datasets
         '''
+        length = self.data
+        self.data=self.data.sample(frac=1)
+        training_data = self.data[:round((len(self.data)*.9))]
+        testing_data = self.data[round((len(self.data)*.9)):]
+        train = pd.DataFrame(training_data)
+        test = pd.DataFrame(testing_data)
+        train.to_csv(f"{path}/training_data.csv")
+        test.to_csv(f"{path}/testing_data.csv")
+        print(f'Training and testing datasets created and saved to {path}')
+        
     def train_valid_train_split(self):
         '''
         Split the data into training, validation, and test datasets
@@ -79,7 +89,8 @@ if __name__=="__main__":
     
     '''
     Dm = DataManager("./Data/data.csv")
-    Dm.visualize(type="pie")
+    Dm.train_test_split()
+    #Dm.visualize(type="pie")
     #Dm.summary()
     #Dm.get_columns()
 
