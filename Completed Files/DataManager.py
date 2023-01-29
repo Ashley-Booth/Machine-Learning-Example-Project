@@ -17,7 +17,7 @@ class DataManager:
         for column in self.data.columns.values:
             if column not in columns_keep:
                 self.data = self.data.drop(column,axis="columns")
-        print(self.data.head())
+        #print(self.data.head())
     
     def print_data(self):
         '''
@@ -47,6 +47,7 @@ class DataManager:
             plt.show()
         else:
             print("Please enter a valid type for visualize method")
+
     def summary(self):
         '''
         Displays the dataframe "head"
@@ -61,17 +62,30 @@ class DataManager:
             Type = type(self.data[column][0])
             print(f"{column}:   {Type}")
     
+    def featurize_data(self):
+        '''
+        Featurizes the diagnosis data into a model readable format.
+        '''
+        self.data["diagnosis_number"]=0
+        for i in range(len(self.data)):
+            if self.data["diagnosis"][i] == "M":
+                self.data["diagnosis_number"][i] = 1
+            elif self.data["diagnosis"][i]=="B":
+                self.data["diagnosis_number"][i] = 0
+        print(self.data.head())
     #Model helper Functions:
     def train_test_split(self,path="./Data"):
         '''
         Split the data into training and test datasets
         '''
-        length = self.data
         self.data=self.data.sample(frac=1)
+
         training_data = self.data[:round((len(self.data)*.9))]
         testing_data = self.data[round((len(self.data)*.9)):]
+
         train = pd.DataFrame(training_data)
         test = pd.DataFrame(testing_data)
+
         train.to_csv(f"{path}/training_data.csv")
         test.to_csv(f"{path}/testing_data.csv")
         print(f'Training and testing datasets created and saved to {path}')
@@ -89,6 +103,7 @@ if __name__=="__main__":
     
     '''
     Dm = DataManager("./Data/data.csv")
+    Dm.featurize_data()
     Dm.train_test_split()
     #Dm.visualize(type="pie")
     #Dm.summary()
