@@ -10,10 +10,6 @@ class DataManager:
         This class will be how we interact and manage our dataset. 
         '''
     
-    def print_data(self):
-        '''
-        Prints Data to terminal row by row (not recommended for large datasets)
-        '''
     def visualize(self, type="bar"):
         '''
         Displays the data as a given graph type. 
