@@ -26,7 +26,7 @@ class DataManager:
         for i in self.data:
             print(self.data[i])
     
-    def visualize(self, type="bar"):
+    def visualize_distribution(self, type="bar"):
         '''
         Displays the data as a given graph type. 
         Graph types include: bar, pie
@@ -47,6 +47,16 @@ class DataManager:
             plt.show()
         else:
             print("Please enter a valid type for visualize method")
+    
+    def visualize_specific(self, column="texture_mean"):
+        '''
+        Graphs a given radius_mean column against the diagnosis_number column
+        '''
+        plt.scatter(self.data[column],self.data["diagnosis_number"])
+        plt.xlabel(column)
+        plt.ylabel("Diagnosis")
+        plt.title(f"{column} and Diagnosis ")
+        plt.show()
 
     def summary(self):
         '''
@@ -104,7 +114,7 @@ if __name__=="__main__":
     '''
     Dm = DataManager("./Data/data.csv")
     Dm.featurize_data()
-    Dm.train_test_split()
+
     #Dm.visualize(type="pie")
     #Dm.summary()
     #Dm.get_columns()
