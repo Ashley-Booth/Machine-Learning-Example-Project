@@ -11,12 +11,12 @@ from keras.optimizers import SGD
 class BasicModel:
     def __init__(self,path):
         self.DM = DataManager(path)
-        self.train_values = pd.read_csv("./Data/training_data_with_vald.csv")["radius_mean"]
+        self.train_values = pd.read_csv("./Data/training_data_with_vald.csv")[["radius_mean","area_mean","perimeter_mean"]]
         self.train_diagnosis = pd.read_csv("./Data/training_data_with_vald.csv")["diagnosis_number"]
-        self.vald_values = pd.read_csv("./Data/training_data_with_vald.csv")["radius_mean"]
+        self.vald_values = pd.read_csv("./Data/training_data_with_vald.csv")[["radius_mean","area_mean","perimeter_mean"]]
         self.vald_diagnosis = pd.read_csv("./Data/training_data_with_vald.csv")["diagnosis_number"]
 
-        self.test_values = pd.read_csv("./Data/testing_data_with_vald.csv")["radius_mean"]
+        self.test_values = pd.read_csv("./Data/testing_data_with_vald.csv")[["radius_mean","area_mean","perimeter_mean"]]
         self.test_diagnosis = pd.read_csv("./Data/testing_data_with_vald.csv")["diagnosis_number"]
         #self.optimizer = SGD(lr=0.00001)
     def create_model(self):
@@ -24,7 +24,9 @@ class BasicModel:
         Create a basic machine learning model using the given parameters
         '''
         self.model = keras.Sequential(name="BasicModel")
-        self.model.add(keras.layers.Dense(1,activation="selu",name="layerOne"))
+        self.model.add(keras.layers.Dense(3,activation="relu",name="layerOne"))
+        self.model.add(keras.layers.Flatten())
+        self.model.add(keras.layers.Dense(1,activation="selu",name="layerOe"))
         self.model.add(keras.layers.Dense(1,activation="sigmoid",name="layerTwo"))
         
         self.model.compile(optimizer ="Adam",loss="mse",metrics=["mae","mse"])
