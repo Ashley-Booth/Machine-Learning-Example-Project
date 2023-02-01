@@ -132,3 +132,6 @@ dmypy.json
 #Training and testing data
 Data/testing_data.csv
 Data/training_data.csv
+Data/testing_data_with_vald.csv
+Data/training_data_with_vald.csv
+Data/validation_data.csv
