@@ -100,10 +100,20 @@ class DataManager:
         test.to_csv(f"{path}/testing_data.csv")
         print(f'Training and testing datasets created and saved to {path}')
         
-    def train_valid_train_split(self):
+    def train_valid_train_split(self,path="./Data"):
         '''
         Split the data into training, validation, and test datasets
         '''
+        self.data = self.data.sample(frac=1)
+        training_data = self.data[:round((len(self.data)*0.8))]
+        validation_data = self.data[round((len(self.data)*0.8)):round((len(self.data)*0.9))]
+        testing_data = self.data[round((len(self.data)*.9)):]
+        train = pd.DataFrame(training_data)
+        vald = pd.DataFrame(validation_data)
+        test = pd.DataFrame(testing_data)
+        train.to_csv(f"{path}/training_data_with_vald.csv")
+        vald.to_csv(f"{path}/validation_data.csv")
+        test.to_csv(f"{path}/testing_data_with_vald.csv")
     
         
 
@@ -114,8 +124,8 @@ if __name__=="__main__":
     '''
     Dm = DataManager("./Data/data.csv")
     Dm.featurize_data()
-
-    #Dm.visualize(type="pie")
+    Dm.train_valid_train_split()
+    #Dm.visualize_distribution(type="pie")
     #Dm.summary()
     #Dm.get_columns()
 
